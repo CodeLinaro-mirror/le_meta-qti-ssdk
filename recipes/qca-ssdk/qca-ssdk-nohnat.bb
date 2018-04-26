@@ -2,7 +2,7 @@ DESCRIPTION = "SSDK Switch Driver"
 LICENSE = "ISC"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/${LICENSE};md5=f3b90e78ea0cffb20bf5cca7947a896d"
 
-inherit module
+inherit module qperf
 
 FILESPATH =+ "${WORKSPACE}:"
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
