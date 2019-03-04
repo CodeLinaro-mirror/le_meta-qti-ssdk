@@ -7,7 +7,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/files/:"
 SRC_URI = "file://qcom-opensource/qca-ssdk-shell/"
 
 CFLAGS +="--sysroot=${STAGING_DIR_TARGET}"
-CFLAGS +="-mfloat-abi=hard"
+CFLAGS +="-mfpu=neon -mfloat-abi=hard"
 
 INSANE_SKIP_${PN} += "already-stripped"
 
