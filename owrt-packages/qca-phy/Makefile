@@ -4,29 +4,21 @@ include $(INCLUDE_DIR)/kernel.mk
 PKG_NAME:=qca-phy
 PKG_VERSION:=1.0
 PKG_RELEASE:=1
+PKG_FIXUP:=autoreconf
 
-ifeq ($(VARIANT),perf)
-  COMPILE_MODE :=perf
-else
-  COMPILE_MODE :=debug
-endif
-
-LOCAL_SRC ?= $(TOPDIR)/src/qcom-opensource/$(PKG_NAME)
-EXTRA_ADDR :=lib/modules/$(LINUX_VERSION)-${COMPILE_MODE}/extra
+LOCAL_SRC := $(TOPDIR)/src/qcom-opensource/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/qca-phy
-	SECTION:=kernel
-	CATEGORY:=Kernel modules
-	SUBMENU:=Network Devices
-	TITLE:=Kernel driver for QCA PHY
-	FILES:=$(PKG_BUILD_DIR)/qca-phy.ko
-	AUTOLOAD:=$(call AutoLoad,30,qca-phy)
+  SECTION:=kernel
+  CATEGORY:=Kernel modules
+  SUBMENU:=Network Devices
+  TITLE:=Kernel driver for QCA PHY
 endef
 
 define KernelPackage/qca-phy/Description
-	This package contains qca-phy driver for QCA chipset
+  This package contains qca-phy driver for QCA chipset
 endef
 
 define Build/Prepare
@@ -47,8 +39,13 @@ define Build/InstallDev
 endef
 
 define KernelPackage/qca-phy/install
-	$(INSTALL_DIR) $(1)/$(EXTRA_ADDR)/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/qca-phy.ko $(1)/$(EXTRA_ADDR)/
+	$(INSTALL_DIR) $(1)/lib/modules/
+	$(SIGN_KEY) $(PKG_BUILD_DIR)/qca-phy.ko
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/qca-phy.ko $(1)/lib/modules/qca_phy.ko
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/qti_ethphy.init $(1)/etc/init.d/
+	$(INSTALL_DIR) $(TOPDIR)/bin/targets/$(TARGET_VARIANT)/modules
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/qca-phy.ko $(TOPDIR)/bin/targets/$(TARGET_VARIANT)/modules/qca_phy.ko
 endef
 
-$(eval $(call KernelPackage,qca-phy))
+$(eval $(call KernelPackage,$(PKG_NAME)))
