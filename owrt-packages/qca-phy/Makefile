@@ -28,10 +28,8 @@ endef
 
 define Build/Compile
 	$(MAKE) -C "$(LINUX_DIR)" \
-		   $(KERNEL_MAKEOPTS) \
-		   M="$(PKG_BUILD_DIR)" \
-		   CC="clang" \
-		   modules
+	M="$(PKG_BUILD_DIR)" \
+	modules
 endef
 
 define Build/InstallDev
