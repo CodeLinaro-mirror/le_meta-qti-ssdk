@@ -5,7 +5,7 @@ PKG_NAME:=qca-phy
 PKG_VERSION:=1.0
 PKG_RELEASE:=1
 PKG_FIXUP:=autoreconf
-PKG_LICENSE:=GPL-2.0+
+PKG_LICENSE:=ISC
 
 LOCAL_SRC := $(TOPDIR)/src/qcom-opensource/$(PKG_NAME)
 
