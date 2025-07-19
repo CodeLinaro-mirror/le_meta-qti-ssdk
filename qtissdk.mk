@@ -8,6 +8,6 @@ else ifeq ($(BOARD),sdx35)
   QTISSDK+=
 endif
 
-ifeq ($(PRPL_VERSION),3.1)
+ifneq ($(PRPL_VERSION),)
 	QTISSDK:=
 endif
